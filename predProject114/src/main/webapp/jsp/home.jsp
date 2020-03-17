@@ -10,14 +10,10 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div class="form-style-2">
     <h1 align="center">Список пользователей</h1>
-</div>
 <hr>
-<div class="form-style-2">
     <table align="center">
         <tr>
             <th align="left">Id</th>
@@ -30,13 +26,13 @@
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
             <td>
-                <form method="post" action="/delete">
+                <form method="post" action="<c:url value="/delete"/>">
                     <input type="hidden" name="id" value="${user.id}">
                     <input type="submit" name="id" value="Удалить">
                 </form>
             </td>
             <td>
-                <form method="post" action="/update">
+                <form method="post" action="<c:url value="/update"/>">
                     <input type="hidden" name="id" value="${user.id}">
                     <input type="submit" name="id" value="Редактировать">
                 </form>
@@ -46,13 +42,12 @@
         </c:forEach>
         <tr>
             <td>
-                <form method="get" action="/addUser">
+                <form method="get" action="<c:url value="/addUser"/>">
                     <button>Добавить</button>
                 </form>
             </td>
         </tr>
         </tr>
     </table>
-</div>
 </body>
 </html>

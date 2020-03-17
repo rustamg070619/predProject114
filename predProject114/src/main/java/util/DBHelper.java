@@ -5,9 +5,24 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import service.UserService;
+
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 
 public class DBHelper {
+
+    private static DBHelper dbHelper;
+
+    public static DBHelper getInstance() {
+        if (dbHelper == null) {
+            dbHelper = new DBHelper();
+        }
+        return dbHelper;
+    }
 
     private SessionFactory sessionFactory;
 
@@ -39,5 +54,17 @@ public class DBHelper {
         builder.applySettings(configuration.getProperties());
         ServiceRegistry serviceRegistry = builder.build();
         return configuration.buildSessionFactory(serviceRegistry);
+    }
+
+    public Connection getSqlConnection() {
+        try {
+            String url = "jdbc:mysql://localhost:3306/db_example?user=root&password=admin12345&useSSL=false&serverTimezone=UTC";
+            DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
+            Connection connection = DriverManager.getConnection(url.toString());
+            return connection;
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            throw new IllegalStateException();
+        }
     }
 }

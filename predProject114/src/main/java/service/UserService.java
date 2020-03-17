@@ -1,11 +1,10 @@
 package service;
 
-import dao.UserDAO;
-import dao.UserHibernateDAO;
-import dao.UserJdbcDAO;
+import dao.*;
 import model.User;
 import java.sql.SQLException;
 import java.util.List;
+import dao.UserDaoFactory;
 
 public class UserService {
 
@@ -18,7 +17,7 @@ public class UserService {
         return userService;
     }
 
-    private UserDAO userDAO = new UserHibernateDAO();
+    private UserDAO userDAO = UserDaoFactory.getUserDAO();
 
     public boolean addUser(User newUser) {
         userDAO.addUser(newUser);
